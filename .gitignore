@@ -1,0 +1,12 @@
+/emacs.desktop
+/auto-save-list
+
+/elpa
+/elpa-*
+
+/history
+/.cask/
+
+*.elc
+*~
+\#*
