@@ -112,6 +112,28 @@
 ;;  :ensure t
 ;;  :bind (("C-x o" . 'ace-window)))
 
+;; counsel package has two dependencies, swiper and ivy. If we download
+;; counsel, the other two will be downloaded automatically.
+
+;; ivy configuration
+(require 'ivy)
+(ivy-mode 1)
+(setq ivy-use-virtual-buffers t)
+(setq ivy-count-format "(%d/%d) ")
+
+;; ivy global key bindings
+(global-set-key (kbd "C-x b") 'ivy-switch-buffer)
+(global-set-key (kbd "C-c v") 'ivy-push-view)
+(global-set-key (kbd "C-c s") 'ivy-switch-view)
+
+(require 'swiper)
+(global-set-key (kbd "C-s") 'swiper-isearch)
+
+(require 'counsel)
+(global-set-key (kbd "M-x") 'counsel-M-x)
+(global-set-key (kbd "C-x C-f") 'counsel-find-file)
+
+
 ;; auto parenthesis completion
 (electric-pair-mode)
 
@@ -163,3 +185,16 @@
 
 (provide 'init)
 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(counsel which-key try smart-mode-line rainbow-delimiters org-bullets good-scroll)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

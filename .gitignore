@@ -6,6 +6,7 @@
 
 /history
 /.cask/
+/recentf
 
 *.elc
 *~
