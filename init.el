@@ -60,9 +60,7 @@
   :if window-system
   :init (good-scroll-mode))
 
-;;(use-package smart-mode-line
-;;  :ensure t
-;;  :init (sml/setup))
+;; don't use smart-mode-line, it causes lag in typing
 
 ;; Org-mode stuff
 (use-package org-bullets
@@ -74,33 +72,7 @@
 ;;  :ensure t
 ;;  :bind (("C-'" . 'avy-goto-char-timer)))
 
-
-;; package 'swiper' depends on package 'counsel'
-;; so we first load counsel
-;;(use-package counsel
-;;  :ensure t)
-
-;; when load swiper, package 'ivy' will be loaded automatically.
-;; (use-package swiper
-;;   :ensure t
-;;   :init
-;;   (ivy-mode 1)
-;;   (counsel-mode 1)
-;;   :config
-;;   (setq ivy-use-virtual-buffers t)
-;;   (setq search-default-mode #'char-fold-to-regexp)
-;;   (setq ivy-count-format "(%d/%d) ")
-;;   :bind
-;;   (("C-s" . 'swiper)
-;;    ("C-x b" . 'ivy-switch-buffer)
-;;    ("C-c v" . 'ivy-push-view)
-;;    ("C-c s" . 'ivy-switch-view)
-;;    ("C-x C-@" . 'counsel-mark-ring)
-;;    ("C-x C-SPC" . 'counsel-mark-ring)
-;;    ("C-x C-f" . 'counsel-find-file)
-;;    ("M-x" . 'counsel-M-x)
-;;    :map minibuffer-local-map
-;;    ("C-r" . 'counsel-minibuffer-history)))
+;; avoid using 'use-package', it may some bugs on key bindings configuration. 
 
 
 ;; swiper can be used to search current buffer for text
@@ -166,11 +138,6 @@
 (use-package rainbow-delimiters
   :ensure t
   :hook(prog-mode . rainbow-delimiters-mode))
-
-
-
-
-
 
 ;; This sentence aims to allow other Emacs lisp file to access and load
 ;; this configuration file
