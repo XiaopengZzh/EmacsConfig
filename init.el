@@ -48,8 +48,7 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-(use-package try
-  :ensure t)
+;; delete try package.
 
 (use-package which-key
   :ensure t
@@ -134,10 +133,7 @@
 ;; close scroll when in graphical display
 (when (display-graphic-p) (toggle-scroll-bar -1))
 
-
-(use-package rainbow-delimiters
-  :ensure t
-  :hook(prog-mode . rainbow-delimiters-mode))
+;; delete rainbow-delimiters
 
 ;; This sentence aims to allow other Emacs lisp file to access and load
 ;; this configuration file
