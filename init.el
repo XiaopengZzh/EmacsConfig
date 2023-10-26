@@ -1,7 +1,7 @@
 ;;; init.el --- Load the full configuration
 
 ;; This file bootstraps the configuration, which is divided
-;; into a number of other files.
+;; into a number of other
 
 
 ;; 'add-to-list' is a Emacs lisp function used to add a item into a list
@@ -66,6 +66,14 @@
   :ensure t
   :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+
+;; prevent the window from scrolling horizontally when typing text that
+;; exceeds the rightmost side of the window.
+;; If we simply use (setq truncate-lines nil), this configuration will apply to plain text mode instead of org-mode
+;; But we only use this in org mode(plain text mode already have this), so we should add the function to org-mode hook, which means executing this function upon opening org-mode.
+(add-hook 'org-mode-hook (lambda() (setq truncate-lines nil)))
+
+(setq org-startup-indented nil)
 
 ;;(use-package avy
 ;;  :ensure t

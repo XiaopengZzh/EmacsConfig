@@ -4,6 +4,8 @@
 /elpa
 /elpa-*
 
+/org-persist
+
 /history
 /.cask/
 /recentf
