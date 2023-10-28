@@ -5,10 +5,15 @@
 /elpa-*
 
 /org-persist
+/projectile-bookmarks.eld
+
 
 /history
 /.cask/
 /recentf
+/.lsp-session-v1
+
+
 
 *.elc
 *~

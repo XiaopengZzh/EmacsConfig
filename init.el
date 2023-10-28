@@ -35,8 +35,12 @@
 
 (require 'package)
 (setq package-enable-at-startup nil)
-(add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/"))
+;;(add-to-list 'package-archives
+;;	     '("melpa" . "https://melpa.org/packages/"))
+
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+			 ("org" . "https://orgmode.org/elpa/")
+			 ("elpa" . "https://elpa.gnu.org/packages/")))
 
 (package-initialize)
 
@@ -112,6 +116,74 @@
 (global-set-key (kbd "M-x") 'counsel-M-x)
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
 
+;; projectile configuration
+
+;; I am not sure if projectile is working in lsp-mode, I suspect that projectile is not helping me
+;; to make a guess on where the project root is, instead that it is lsp-mode who are helping me
+;; make a guess on where the project root is.
+;; So here I will just use projectile to help me find the files in the project, mainly by fuzzy
+;; search
+(use-package projectile
+  :ensure t
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
+  :config
+  (setq projectile-mode-line "Projectile")
+  (setq projectile-track-known-projects-automatically nil))
+
+(use-package counsel-projectile
+  :ensure t
+  :after (projectile)
+  :config (counsel-projectile-mode))
+
+
+
+
+;; lsp mode configuration
+
+(defun efs/lsp-mode-setup()
+  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+  (lsp-headerline-breadcrumb-mode))
+
+(use-package lsp-mode
+  :commands (lsp lsp-deferred)
+  :hook (lsp-mode . efs/lsp-mode-setup)
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  :config
+  (lsp-enable-which-key-integration t))
+
+
+(which-key-mode)
+(add-hook 'c-mode-hook 'lsp)
+(add-hook 'c++-mode-hook 'lsp)
+
+;; company mode
+
+(use-package company
+  :after lsp-mode
+  :hook (lsp-mode . company-mode)
+  :bind (:map company-active-map
+	      ("<tab>" . company-complete-selction))
+  (:map lsp-mode-map
+	("<tab>" . company-indent-or-complete-common))
+  :custom
+  (company-minimum-prefix-length 3)
+  (company-idle-delay 0.0)
+  (company-show-numbers t))
+
+(use-package company-box
+  :hook (company-mode . company-box-mode))
+
+;; lsp-ui
+
+(use-package lsp-ui
+  :hook (lsp-mode . lsp-ui-mode)
+  :custom
+  (lsp-ui-doc-position 'bottom))
+
+
+
 
 ;; auto parenthesis completion
 (electric-pair-mode)
@@ -162,7 +234,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(counsel which-key try smart-mode-line rainbow-delimiters org-bullets good-scroll)))
+   '(lsp-ui company-box company lsp-mode counsel-projectile projectile which-key org-bullets good-scroll counsel)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
