@@ -54,6 +54,10 @@
 
 ;; delete try package.
 
+(setq org-image-actual-width nil)
+
+(setq auto-save-default nil)
+
 (use-package which-key
   :ensure t
   :config (which-key-mode))
@@ -153,7 +157,7 @@
   :config
   (lsp-enable-which-key-integration t))
 
-
+(setq lsp-enable-snippet nil)
 (which-key-mode)
 (add-hook 'c-mode-hook 'lsp)
 (add-hook 'c++-mode-hook 'lsp)
@@ -182,6 +186,40 @@
   :custom
   (lsp-ui-doc-position 'bottom))
 
+
+;; quit dap mode, too unhuman configuration, use clion instead on macOS
+;; dap-mode
+
+;;(use-package dap-mode
+;;  :commands dap-debug
+;;  :config
+;;  (dap-ui-mode 1)
+;;  (dap-tooltip-mode 1)
+;;  (tooltip-mode 1)
+;;  (dap-ui-controls-mode 1))
+
+;;(require 'dap-lldb)
+
+
+;; org-download configuration, this allows us to yank images from another point.
+
+;;(defun org-download-mymethod()
+;;  concat (file-name-sans-extension (buffer-file-name)) "-imag")
+
+;; use C-c C-x C-v to execute org-toggle-inline-images
+;; download snipaste to help capture screen to clipboard
+(use-package org-download
+  :ensure t
+  :config
+  (add-hook 'dired-mode-hook 'org-download-enable)
+  (setq org-download-method 'directory)
+;; setq org-download-image-dir is not working at all, I don't know why  
+;;  (setq-default org-download-image-dir (concat "./images/" (file-name-sans-extension (buffer-file-name))))
+;;  (setq org-download-image-dir 'org-download-mymethod)
+  (setq org-download-image-attr-list '("#+ATTR_ORG: :width 100px"))
+;; image-actual-width 100 , I'm not sure if this is working. org-download-image-attr-list is working
+  (setq image-actual-width 100)
+  :bind (("C-M-p" . org-download-clipboard)))
 
 
 
@@ -234,7 +272,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(lsp-ui company-box company lsp-mode counsel-projectile projectile which-key org-bullets good-scroll counsel)))
+   '(org-attach-screenshot org-download dap-mode lsp-ui company-box company lsp-mode counsel-projectile projectile which-key org-bullets good-scroll counsel)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
