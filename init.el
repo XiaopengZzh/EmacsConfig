@@ -75,6 +75,11 @@
   :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
+
+
+
+
+
 ;; prevent the window from scrolling horizontally when typing text that
 ;; exceeds the rightmost side of the window.
 ;; If we simply use (setq truncate-lines nil), this configuration will apply to plain text mode instead of org-mode
@@ -223,6 +228,42 @@
 
 
 
+;; auctex
+
+;;(use-package tex
+;;:ensure auctex)
+(load "~/.emacs.d/elpa/auctex-13.2.2/auctex.el" nil t t)
+(load "~/.emacs.d/elpa/auctex-13.2.2/preview.el" nil t t)
+(setq TeX-auto-save nil)
+;;(load "preview-latex.el" nil t t)
+(add-hook 'LaTeX-mode-hook
+	  (lambda()
+	    (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t))
+	    (setq TeX-command-default "XeLaTeX")
+	    (setq TeX-save-query nil)
+	    (setq TeX-show-compilation t)
+	    ))
+
+(require 'cdlatex)
+(add-hook 'LaTeX-mode-hook 'turn-on-cdlatex)
+(add-hook 'latex-mode-hook 'turn-on-cdlatex)
+
+;; compant-auctex
+(add-to-list 'load-path "~/.emacs.d/elpa/company-auctex-20200529.1835/company-auctex.el")
+
+(require 'company-auctex)
+
+(company-auctex-init)
+
+(add-to-list 'company-backends 'company-auctex)
+
+(add-hook 'LaTeX-mode-hook 'company-mode)
+
+
+
+
+
+
 ;; auto parenthesis completion
 (electric-pair-mode)
 
@@ -272,7 +313,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(org-attach-screenshot org-download dap-mode lsp-ui company-box company lsp-mode counsel-projectile projectile which-key org-bullets good-scroll counsel)))
+   '(company-auctex cdlatex auctex org-attach-screenshot org-download dap-mode lsp-ui company-box company lsp-mode counsel-projectile projectile which-key org-bullets good-scroll counsel)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
